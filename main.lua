@@ -18,17 +18,6 @@ button_gfx = {
 	term=userdata"[gfx]08080777777007000070070000700700007007777770000770000777777000000000[/gfx]"
 }
 
-menuitem({
-		id=0,
-		label="\^:0f19392121213f00 Open file",
-		shortcut = "CTRL-O",
-		action=function()
-			local segs = split(open_files[focused_file],"/",false)
-			local path = string.sub(open_files[focused_file], 1, -#segs[#segs] - 2) -- same folder as current file
-			create_process("/system/apps/filenav.p64", {path = path, window_attribs= {workspace = "current", autoclose=true}})
-		end
-})
-
 function _init()
 	store("/ram/cart/untitled.txt","",{})
 	add(open_files,{path="/ram/cart/untitled.txt",name="untitled.txt",state=fetch("/ram/cart/untitled.txt")})

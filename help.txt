@@ -8,8 +8,8 @@ file navigator
 Use the "Close active tab" button
 (similarly to how you opened this)
 
--- How do I turn off auto-updates?
-Edit the "main.lua" inside of the "launcher"
+-- How do I edit my settings?
+Edit the "prefs.pod" inside of the launcher
 
 -- Where do I send feedback?
 Comment on the bbs post

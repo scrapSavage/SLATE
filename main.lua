@@ -54,9 +54,8 @@ function _draw()
 	window({
 		title=(open_files[focused_file].path.." - SLATE")
 	})
-	for i=1,#open_files do
-		print(open_files[i].name,32,i*12)
-	end
+	rectfill(0,0,1000,10,12)
+	line(0,11,1000,11,16)
 end
 
 function set_active_tab(idx)

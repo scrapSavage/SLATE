@@ -137,7 +137,9 @@ function _init()
 		x=32, y=0,
 		width=1000, height=10,
 		tap = function(self)
-			set_active_tab(get_tab_at_mouse())
+			if get_tab_at_mouse() then
+				set_active_tab(get_tab_at_mouse())
+			end
 		end
 	}
 end
@@ -151,6 +153,7 @@ function get_tab_at_mouse()
 		end
 		offset+=txtw(file.name)+4
 	end
+	return false
 end
 
 -- ternary doesn't seem to be working (or I'm doing it wrong)

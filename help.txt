@@ -1,0 +1,18 @@
+--[[ Slate help
+
+-- How do I open files?
+Drag and drop files from your desktop or from
+file navigator
+
+-- How do I close tabs?
+Use the "Close active tab" button
+(similarly to how you opened this)
+
+-- How do I turn off auto-updates?
+Edit the "main.lua" inside of the "launcher"
+
+-- Where do I send feedback?
+Comment on the bbs post
+(https://www.lexaloffle.com/bbs/?tid=140703)
+
+]]--

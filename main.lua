@@ -45,6 +45,8 @@ function _init()
 			y = 0,
 			width=10,
 			height=10,
+			draw = function(self)
+			end,
 			tap = function(self)
 				open_files[focused_file].state = table.concat(code_editor:get_text(),"\n")
 				store(open_files[focused_file].path,open_files[focused_file].state,{})
@@ -58,6 +60,8 @@ function _init()
 			y = 0,
 			width=10,
 			height=10,
+			draw = function(self)
+			end,
 			tap = function(self)
 				create_process(open_files[focused_file].path)
 			end
@@ -69,6 +73,8 @@ function _init()
 			y = 0,
 			width=10,
 			height=10,
+			draw = function(self)
+			end,
 			tap = function(self)
 				notify("This button doesn't do anything yet.")
 			end

@@ -46,6 +46,45 @@ function _init()
 		has_search=true
 	})
 	code_editor:attach_scrollbars({autohide=true})
+	
+	-- quick buttons
+	
+	--save
+	gui:attach{
+			cursor = "pointer",
+			x = 0,
+			y = 0,
+			width=10,
+			height=10,
+			tap = function(self)
+				open_files[focused_file].state = table.concat(code_editor:get_text(),"\n")
+				store(open_files[focused_file].path,open_files[focused_file].state,{})
+				notify("Saved "..open_files[focused_file].path)
+			end
+	}
+	--run
+	gui:attach{
+			cursor = "pointer",
+			x = 10,
+			y = 0,
+			width=10,
+			height=10,
+			tap = function(self)
+				create_process(open_files[focused_file].path)
+			end
+	}
+	--term
+	gui:attach{
+			cursor = "pointer",
+			x = 20,
+			y = 0,
+			width=10,
+			height=10,
+			tap = function(self)
+				notify("This button doesn't do anything yet.")
+			end
+	}
+
 end
 
 function _draw()
@@ -56,6 +95,9 @@ function _draw()
 	})
 	rectfill(0,0,1000,10,12)
 	line(0,11,1000,11,16)
+	spr(button_gfx.save,1,2)
+	spr(button_gfx.run,10,2)
+	spr(button_gfx.term,19,2)
 end
 
 function set_active_tab(idx)

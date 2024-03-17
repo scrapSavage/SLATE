@@ -35,6 +35,8 @@ local save_button
 local run_button
 local term_button
 
+local bottom_bar
+
 menuitem({
 	id=0,
 	label="\^:386C603010001000 Help",
@@ -45,8 +47,6 @@ menuitem({
 		set_active_tab(#open_files)
 	end
 })
-
-local bottom_bar
 
 function close_tab(idx)
 	if idx==focused_file then

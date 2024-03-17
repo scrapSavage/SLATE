@@ -39,7 +39,7 @@ menuitem({
 	action=function()
 		local help = fetch("https://raw.githubusercontent.com/scrapSavage/SLATE/main/help.txt")
 		store("help.txt",help,{})
-		add(open_files,{path=pwd().."help.txt",name="help.txt",state=fetch("help.txt")})
+		add(open_files,{path=pwd().."/help.txt",name="help.txt",state=fetch("help.txt")})
 		set_active_tab(#open_files)
 	end
 })

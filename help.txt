@@ -5,8 +5,7 @@ Drag and drop files from your desktop or from
 file navigator
 
 -- How do I close tabs?
-Use the "Close active tab" button
-(similarly to how you opened this)
+Right click to open a menu, middle click to force
 
 -- How do I edit my settings?
 Edit the "prefs.pod" inside of the launcher

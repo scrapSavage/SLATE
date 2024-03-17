@@ -132,6 +132,7 @@ function _init()
 		end,
 		tap = function(self)
 			notify("This button doesn't do anything yet.")
+			code_editor.syntax_highlighting = not code_editor.syntax_highlighting
 			self.y=0
 		end,
 		click = function(self)
@@ -253,6 +254,7 @@ function get_tab_x(idx)
 end
 
 function set_active_tab(idx)
+	code_editor.syntax_highlighting = (string.sub(open_files[idx].name,-4)!=".txt")
 	open_files[focused_file].state = table.concat(code_editor:get_text(),"\n")
 	focused_file = idx
 	code_editor:set_text(open_files[focused_file].state)

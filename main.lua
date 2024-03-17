@@ -7,6 +7,8 @@
 
 --]]
 
+poke(0x4000, get(fetch("/system/fonts/lil_mono.font"))) -- set font
+
 local gui
 local code_editor
 

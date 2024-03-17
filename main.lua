@@ -5,7 +5,7 @@
 	
 	Changing this file with auto updates enabled will overwrite changes.
 
---]]
+]]--
 
 poke(0x4000, get(fetch("/system/fonts/lil_mono.font"))) -- set font
 

@@ -70,6 +70,7 @@ function close_tab(idx)
 end
 
 local current_pulldown
+
 function _init()
 	store("/ram/cart/untitled.txt","",{})
 	add(open_files,{path="/ram/cart/untitled.txt",name="untitled.txt",state=fetch("/ram/cart/untitled.txt")})

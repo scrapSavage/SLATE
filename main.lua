@@ -35,8 +35,6 @@ local save_button
 local run_button
 local term_button
 
-local bottom_bar
-
 menuitem({
 	id=0,
 	label="\^:386C603010001000 Help",
@@ -69,6 +67,7 @@ function close_tab(idx)
 	end
 end
 
+local bottom_bar
 local current_pulldown
 
 function _init()

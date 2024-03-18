@@ -45,7 +45,7 @@ menuitem({
 	action=function()
 		local help = fetch("https://raw.githubusercontent.com/scrapSavage/SLATE/main/help.txt")
 		store("help.txt",help,{})
-		add(open_files,{path=pwd().."/help.txt",name="help.txt",state=fetch("help.txt")})
+		add(open_files,{path=pwd().."/help.txt",name="help.txt",state=fetch("help.txt"),dec="",saved=true})
 		set_active_tab(#open_files)
 	end
 })
@@ -86,7 +86,7 @@ function _init()
 		height_rel=1,
 		height_add=-25,
 		show_line_numbers=true,
-		syntax_highlighting=true,
+		syntax_highlighting=false,
 		markup=false,
 		embed_pods=true,
 		has_search=true
@@ -291,14 +291,13 @@ end
 on_event("drop_items",function(msg)
 	for i=1,#msg.items do
 		local item = msg.items[i]
-		notify(item.pod_type)
 		if item.pod_type == "file_reference" then
 			if item.attrib == "file" then
-				notify("Added "..item.filename)
 				add(open_files,{path=item.fullpath,name=item.filename,state=fetch(item.fullpath),saved=true,dec=""})
 				set_active_tab(#open_files)
 			else
-				notify("Not a file.")
+				create_process("/system/apps/filenav.p64", {argv={item.fullpath}})
+				notify(item.filename.." is a folder.")
 			end
 		else
 			notify("Couldn't open "..item.filename)

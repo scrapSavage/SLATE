@@ -77,8 +77,7 @@ local bottom_bar
 local current_pulldown
 
 function _init()
-	store("/ram/cart/untitled.txt","",{})
-	add(open_files,{path="/ram/cart/untitled.txt",name="untitled.txt",state=fetch("/ram/cart/untitled.txt"),dec="",saved=true})
+	add(open_files,{path="/ram/cart/main.lua",name="main.lua",state=fetch("/ram/cart/main.lua"),dec="",saved=true})
 	gui = create_gui()
 	code_editor = gui:attach_text_editor({
 		x=0,y=14,
@@ -88,7 +87,7 @@ function _init()
 		height_rel=1,
 		height_add=-25,
 		show_line_numbers=true,
-		syntax_highlighting=false,
+		syntax_highlighting=true,
 		markup=false,
 		embed_pods=true,
 		has_search=true
@@ -160,7 +159,7 @@ function _init()
 		end,
 		tap = function(self)
 			local file = open_files[focused_file]
-			local open_path = file.path:sub(0,#file.name-2)
+			local open_path = file.path:sub(0,#file.path-#file.name)
 			create_process("/system/apps/filenav.p64", {argv={open_path}})
 			self.y=0
 		end,

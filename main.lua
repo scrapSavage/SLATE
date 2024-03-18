@@ -18,6 +18,8 @@ local focused_file = 1
 local open_files = {}
 local focused = false
 
+local tab_x_offset = 38
+
 window({
 	x=90,
 	y=35,
@@ -28,12 +30,14 @@ window({
 button_gfx = {
 	save=userdata"[gfx]08080707700007077070070000700777777007077770070777700777777000000000[/gfx]",
 	run=userdata"[gfx]08080700000007770000077777000777777007777700077700000700000000000000[/gfx]",
-	term=userdata"[gfx]08080777777007000070070000700700007007777770000770000777777000000000[/gfx]"
+	term=userdata"[gfx]08080777777007000070070000700700007007777770000770000777777000000000[/gfx]",
+	nav=userdata"[gfx]08080000000000007770077777700777777007777770077777700777777000000000[/gfx]"
 }
 
 local save_button
 local run_button
 local term_button
+local nav_button
 
 menuitem({
 	id=0,
@@ -103,6 +107,7 @@ function _init()
 			store(open_files[focused_file].path,open_files[focused_file].state,{})
 			notify("Saved "..open_files[focused_file].path)
 			self.y=0
+			open_files[focused_file].saved = true
 		end,
 		click = function(self)
 			self.y=1
@@ -131,8 +136,30 @@ function _init()
 		draw = function(self)
 		end,
 		tap = function(self)
-			notify("This button doesn't do anything yet.")
-			code_editor.syntax_highlighting = not code_editor.syntax_highlighting
+
+			create_process("/system/apps/terminal.lua")
+			-- I really want this to make the working
+			-- directory the open file, but I just
+			-- can't figure it out.
+			
+			-- if you know how to, please let me know!
+			self.y=0
+		end,
+		click = function(self)
+			self.y=1
+		end
+	}
+	--nav
+	nav_button = gui:attach{
+		cursor = "pointer",
+		x = 30, y = 0,
+		width=10, height=10,
+		draw = function(self)
+		end,
+		tap = function(self)
+			local file = open_files[focused_file]
+			local open_path = file.path:sub(0,#file.name-2)
+			create_process("/system/apps/filenav.p64", {argv={open_path}})
 			self.y=0
 		end,
 		click = function(self)
@@ -143,7 +170,7 @@ function _init()
 	--clicking tabs
 	gui:attach{
 		cursor = "pointer",
-		x=32, y=0,
+		x=tab_x_offset, y=0,
 		width=1000, height=10,
 		click = function(self)
 			if get_tab_at_mouse() then
@@ -192,10 +219,10 @@ function get_tab_at_mouse()
 	local offset = 0
 	for i=1,#open_files do
 		local file = open_files[i]
-		if mouse_aabb(32+offset,0,32+offset+txtw(file.name)+2,10) then
+		if mouse_aabb(tab_x_offset+offset,0,tab_x_offset+offset+txtw(file.name..file.dec)+2,10) then
 			return i
 		end
-		offset+=txtw(file.name)+4
+		offset+=txtw(file.name..file.dec)+4
 	end
 	return false
 end
@@ -234,12 +261,14 @@ function _draw()
 	spr(button_gfx.save,1,2+save_button.y)
 	spr(button_gfx.run,10,2+run_button.y)
 	spr(button_gfx.term,19,2+term_button.y)
+	spr(button_gfx.nav,28,2+nav_button.y)
+	open_files[focused_file].dec = tern(open_files[focused_file].saved,""," *")
 	local offset = 0
 	for i=1,#open_files do
 		local file = open_files[i]
 		local foc = i==focused_file
-		tab(32+offset,txtw(file.name)+2,tern(foc,-1,0),foc,file.name)
-		offset+=txtw(file.name)+4
+		tab(tab_x_offset+offset,txtw(file.name..file.dec)+2,tern(foc,-1,0),foc,file.name..file.dec)
+		offset+=txtw(file.name..file.dec)+4
 	end
 	bottom_bar.y=get_display():height()-11
 end
@@ -248,7 +277,7 @@ function get_tab_x(idx)
 	local x=32
 	for i=1,#open_files do
 		if i==idx then return x end
-		x+=txtw(open_files[i].name)+4
+		x+=txtw(open_files[i].name..open_files[i].dec)+4
 	end
 	return x
 end
@@ -266,7 +295,7 @@ on_event("drop_items",function(msg)
 		if item.pod_type == "file_reference" then
 			if item.attrib == "file" then
 				notify("Added "..item.filename)
-				add(open_files,{path=item.fullpath,name=item.filename,state=fetch(item.fullpath)})
+				add(open_files,{path=item.fullpath,name=item.filename,state=fetch(item.fullpath),saved=true,dec=""})
 				set_active_tab(#open_files)
 			else
 				notify("Not a file.")
@@ -283,4 +312,9 @@ end)
 
 on_event("lost_focus",function(msg)
 	focused=false
+end)
+
+-- for that pretty little star
+on_event("keydown",function()
+	open_files[focused_file].saved=false
 end)

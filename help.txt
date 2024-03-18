@@ -10,6 +10,14 @@ Right click to open a menu, middle click to force
 -- How do I edit my settings?
 Edit the "prefs.pod" inside of the launcher
 
+-- What does the "*" next to a tab mean?
+It means you have unsaved changes in that file
+
+-- What do the monitor and folder button do?
+The monitor button opens a terminal, the folder
+button opens a folder in the location of the open
+file.
+
 -- Where do I send feedback?
 Comment on the bbs post
 (https://www.lexaloffle.com/bbs/?tid=140703)

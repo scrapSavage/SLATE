@@ -57,13 +57,12 @@ function close_tab(idx)
 				exit()
 			else
 				deli(open_files,focused_file)
-				focused_file = 1
-				code_editor:set_text(open_files[focused_file].state)
+				set_active_tab(1)
+				notify("AA")
 			end
 		else
 			deli(open_files,focused_file)
-			focused_file-=1
-			code_editor:set_text(open_files[focused_file].state)
+			set_active_tab(focused_file-1)
 		end
 	else
 		deli(open_files,idx)
@@ -284,7 +283,9 @@ end
 
 function set_active_tab(idx)
 	code_editor.syntax_highlighting = (string.sub(open_files[idx].name,-4)!=".txt")
-	open_files[focused_file].state = table.concat(code_editor:get_text(),"\n")
+	if not (#open_files<focused_file) then
+		open_files[focused_file].state = table.concat(code_editor:get_text(),"\n")
+	end
 	focused_file = idx
 	code_editor:set_text(open_files[focused_file].state)
 end

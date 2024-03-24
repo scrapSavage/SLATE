@@ -93,7 +93,7 @@ function _init()
 		has_search=true
 	})
 	code_editor:attach_scrollbars({autohide=true})
-	
+	code_editor:set_keyboard_focus(true)
 	-- quick buttons
 	
 	--save
@@ -253,6 +253,7 @@ end
 function _draw()
 	m.x,m.y,m.b = mouse()
 	gui:update_all()
+	if (not code_editor:search_box_is_open()) code_editor:set_keyboard_focus(true)
 	gui:draw_all()
 	window({
 		title=(open_files[focused_file].path.." - SLATE")

@@ -94,6 +94,7 @@ function _init()
 	})
 	code_editor:attach_scrollbars({autohide=true})
 	code_editor:set_keyboard_focus(true)
+	code_editor:set_text(open_files[focused_file].state)
 	-- quick buttons
 	
 	--save
@@ -228,11 +229,10 @@ function get_tab_at_mouse()
 	return false
 end
 
--- ternary doesn't seem to be working (or I'm doing it wrong)
--- please let me know
+-- I know this is stupid I got confused from all
+-- the godot dev I was doing, I'll fix it later
 function tern(con,a,b)
-	if con then return a end
-	return b
+	return con and a or b
 end
 
 function tab(x,w,yoff,sel,txt)
